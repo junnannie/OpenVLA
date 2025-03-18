@@ -1,5 +1,7 @@
 # 多模态具身智能大模型（OpenVLA）复现与优化实践
 
+![截屏2025-03-18 02.34.34](/Users/n/Library/Application Support/typora-user-images/截屏2025-03-18 02.34.34.png)
+
 以 GPT 为代表的 Decoder-Only 架构大模型在泛化性、zero-shot 能力上取得巨大进展，随后的 [Clip](https://github.com/openai/CLIP.git)、[LLaVA](https://github.com/haotian-liu/LLaVA.git) 的等多模态的工作让大模型有了理解世界的能力，使得使用 VLM 控制机器人成为可能。
 
 我深入研究视觉-语言-动作（VLA）领域最新的模型 [OpenVLA](https://github.com/openvla/openvla) ，通过全面复现、创新微调与优化部署，实现机器人智能控制系统提升：
@@ -41,6 +43,8 @@
 
 
 ## 数据集 LIBERO
+
+![fig1](resources/fig1.png)
 
 LIBERO，Lifelong Robot Learning Benchmark，是一个专为终身机器人学习研究设计的基准数据集，旨在促进机器人在长期学习过程中知识转移的研究。 
 
