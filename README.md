@@ -1,7 +1,5 @@
 # 多模态具身智能大模型（OpenVLA）复现与优化实践
 
-![截屏2025-03-18 02.34.34](/Users/n/Library/Application Support/typora-user-images/截屏2025-03-18 02.34.34.png)
-
 以 GPT 为代表的 Decoder-Only 架构大模型在泛化性、zero-shot 能力上取得巨大进展，随后的 [Clip](https://github.com/openai/CLIP.git)、[LLaVA](https://github.com/haotian-liu/LLaVA.git) 的等多模态的工作让大模型有了理解世界的能力，使得使用 VLM 控制机器人成为可能。
 
 我深入研究视觉-语言-动作（VLA）领域最新的模型 [OpenVLA](https://github.com/openvla/openvla) ，通过全面复现、创新微调与优化部署，实现机器人智能控制系统提升：
@@ -12,37 +10,39 @@
 
 
 
-## 实际效果展示(以 LIBERO-Spatial为例)
+## 🎉实际效果展示(以 LIBERO-Spatial为例)
 
-|                            测试1                             |                            测试2                             |                            测试3                             |
+|                         ✅ 成功测试1                          |                         ✅ 成功测试2                          |                         ✅ 成功测试3                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![19](resources/19--successTrue--taskpick_up_the_black_bowl_on_the_wooden_cabinet_and_p.gif) | ![2](resources/2--successTrue--taskpick_up_the_black_bowl_between_the_plate_and_the_r.gif) | ![3](resources/3--successTrue--taskpick_up_the_black_bowl_next_to_the_ramekin_and_pla.gif) |
 |       拿起放在木质橱柜上的那个黑色碗，并将它放到盘子中       |       拿起放在小烤碗旁边的那个黑色碗，并将它放在盘子中       |           拿起小烤碗旁边的黑色碗，并把它放到盘子中           |
-|                          **测试4**                           |                          **测试5**                           |                          **测试6**                           |
+|                       **✅ 成功测试4**                        |                       ✅ **成功测试5**                        |                       ✅ **成功测试6**                        |
 | ![14](resources/14--successTrue--taskpick_up_the_black_bowl_next_to_the_cookie_box_and_.gif) | ![8](resources/8--successTrue--taskpick_up_the_black_bowl_on_the_cookie_box_and_place.gif) | ![10](resources/10--successTrue--taskpick_up_the_black_bowl_in_the_top_drawer_of_the_wo.gif) |
 |           拿起饼干盒旁边的黑色碗，并将它放到盘子中           |          拿起放在饼干盒上的黑色碗，并把它放到盘子中          |      拿起木质橱柜最上面抽屉里的黑色碗，并把它放到盘子中      |
 
 
 
-以上的六个测试用例都是成功的测试用例，接下来再展示几个失败的
+以上的六个测试用例都是成功的测试用例，接下来再展示几个失败的测试用例
 
-|                          失败测试1                           |                          失败测试2                           |                          失败测试3                           |
+|                         ❌ 失败测试1                          |                         ❌ 失败测试2                          |                         ❌ 失败测试3                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![7](resources/7--successFalse--taskpick_up_the_black_bowl_on_the_cookie_box_and_place.gif) | ![15](resources/15--successFalse--taskpick_up_the_black_bowl_on_the_stove_and_place_it_o.gif) | ![20](resources/20--successFalse--taskpick_up_the_black_bowl_on_the_wooden_cabinet_and_p.gif) |
 |          拿起放在饼干盒上的黑色碗，并将它放到盘子中          |             拿起炉子上的黑色碗，并将它放到盘子中             |           拿起木质橱柜上的黑色碗，并将它放到盘子中           |
 | **失败原因**：虽然成功的放到了盘子中，但是模型没有停止输出，导致仿真环境的 Step 达到最大次数，发生了截断 | **失败原因**：对炉子上的黑色碗的位置判断不够准确，当机械臂还没有移动到准确的位置时，就执行了抓取动作 | **失败原因**：虽然成功的放到了盘子中，但是模型没有停止输出，导致仿真环境的 Step 达到最大次数，发生了截断 |
 
-
-
-测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-
+如果你看不到 `gif` ，请科学上网 ✅
 
 
 
+## 💡说明
 
 
 
-## 数据集 LIBERO
+
+
+
+
+## 📊 数据集 LIBERO
 
 ![fig1](resources/fig1.png)
 
@@ -75,7 +75,7 @@ LIBERO，Lifelong Robot Learning Benchmark，是一个专为终身机器人学�
 
 
 
-## 数据集格式 RLDS
+## 📊 数据集格式 RLDS
 
 RLDS（Reinforcement Learning Datasets）是一套用于记录、回放、操作、注释和共享顺序决策数据的生态系统。它通过明确定义数据集的每个字段内容和含义，提供工具来重新对齐和转换这些数据，以适应不同算法实现所需的格式。 
 
@@ -91,7 +91,7 @@ RLDS（Reinforcement Learning Datasets）是一套用于记录、回放、操作
 
 
 
-## 安装
+## 📦安装
 
 ### 1.配置 OpenVLA
 
