@@ -1,12 +1,4 @@
-# 🤖多模态具身智能大模型（OpenVLA）复现与优化实践
-
-以 GPT 为代表的 Decoder-Only 架构大模型在泛化性、zero-shot 能力上取得巨大进展，随后的 [Clip](https://github.com/openai/CLIP.git)、[LLaVA](https://github.com/haotian-liu/LLaVA.git) 的等多模态的工作让大模型有了理解世界的能力，使得使用 VLM 控制机器人成为可能。
-
-我深入研究视觉-语言-动作（VLA）领域的新模型 [OpenVLA](https://github.com/openvla/openvla) ，通过全面复现、创新微调与优化部署，实现机器人智能控制系统提升：
-
-1. **精准复现与仿真验证**：采用 PyTorch 框架精准复现 [OpenVLA](https://github.com/openvla/openvla) 模型架构，搭建起包含视觉感知、语言指令和动作规划的完整端到端训练与验证平台，成功验证模型在复杂环境中的泛化能力与鲁棒性，具备出色的零样本迁移性能。
-2. **高效的参数微调方案**：针对预训练数据与 [LIBERO](https://libero-project.github.io/datasets) 任务数据模态差异大、数据规模有限的挑战，运用 HuggingFace 工具链设计了 LoRA 低秩微调策略。通过冻结原主干网络，仅优化极少量的低秩适配参数（1.45%），使任务准确率提升23%。
-3. **高效云端部署与量化优化**：探索工程部署方案，将模型通过 INT8 量化技术压缩至原大小的 28% ，部署到阿里云GPU服务器（A10），在保持 92.3% 原始精度基础上，推理速度提升了 3.2 倍 ，大幅降低推理延迟，展现出良好的实际应用潜力。
+# 🤖多模态具身智能大模型（OpenVLA）复现
 
 
 
@@ -29,8 +21,6 @@
 | ![7](resources/7--successFalse--taskpick_up_the_black_bowl_on_the_cookie_box_and_place.gif) | ![15](resources/15--successFalse--taskpick_up_the_black_bowl_on_the_stove_and_place_it_o.gif) | ![20](resources/20--successFalse--taskpick_up_the_black_bowl_on_the_wooden_cabinet_and_p.gif) |
 |          拿起放在饼干盒上的黑色碗，并将它放到盘子中          |             拿起炉子上的黑色碗，并将它放到盘子中             |           拿起木质橱柜上的黑色碗，并将它放到盘子中           |
 | **失败原因**：虽然成功的放到了盘子中，但是模型没有停止输出，导致仿真环境的 Step 达到最大次数，发生了截断 | **失败原因**：对炉子上的黑色碗的位置判断不够准确，当机械臂还没有移动到准确的位置时，就执行了抓取动作 | **失败原因**：虽然成功的放到了盘子中，但是模型没有停止输出，导致仿真环境的 Step 达到最大次数，发生了截断 |
-
-如果你看不到 `gif` ，请科学上网 ✅
 
 
 
@@ -145,7 +135,7 @@ LIBERO，Lifelong Robot Learning Benchmark，是一个专为终身机器人学�
 
 
 
-如果你想了解更多关于 LIBERO 数据集，请参考：
+更多关于 LIBERO 数据集，请参考：
 
 1. https://libero-project.github.io/datasets
 
